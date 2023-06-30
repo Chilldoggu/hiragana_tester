@@ -2,3 +2,4 @@
 logs
 hiragana
 *.sh
+.flake8
