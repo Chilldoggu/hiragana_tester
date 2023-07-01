@@ -1,0 +1,65 @@
+<Tester>
+    name: 'MainTester'
+    currImg: currImg
+    myTextInput: myTextInput
+    myLabel: myLabel
+    checkLabel: checkLabel
+
+    on_path: self.screenSwipe()
+
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            id: currImg
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [20, 40, 20, 40]
+            spacing: 40
+            Label:
+                id: checkLabel
+                text: ''
+                bold: True
+                font_size: 20
+                halign: 'center'
+            TextInput:
+                id: myTextInput
+                multiline: False
+                text_validate_unfocus: False
+                on_text_validate: root.check_hiragana(self.text)
+                font_size: self.height - 25
+                halign: 'center'
+            Label:
+                id: myLabel
+                font_size: 20
+
+<LoadFile>
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: 'vertical'
+        FileChooserIconView:
+            id: fileChooser
+            path: './img/'
+            dirselect: True
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Load'
+                on_release: root.load(fileChooser.selection)
+            Button:
+                text: 'Cancel'
+                on_release: root.cancel()
+
+<ChooseFile>
+    name: 'MainChooseFile'
+    FloatLayout:
+        Button:
+            text: 'Choose folder with study material'
+            on_release: root.show_load()
+
+
+<JapaneseManager>
+    ChooseFile
+    Tester
