@@ -20,6 +20,7 @@ class Tester(Screen):
     myTextInput = ObjectProperty(None)
     myLabel = ObjectProperty(None)
     checkLabel = ObjectProperty(None)
+    # Path is being initialized in ChooseFile.load()
     path = ObjectProperty(None)
 
     def __init__(self, **kwargs):
@@ -38,10 +39,10 @@ class Tester(Screen):
             self.__init__()
             self.screenSwipe()
         self.rngImage = choice(self.images)
-        self.currImg.source = str(Path().joinpath("img", "hiragana", self.rngImage))
+        self.currImg.source = str(self.path.joinpath(self.rngImage))
         self.myLabel.text = "hiraganas left: " + str(len(self.images))
 
-    def check_handler(self):
+    def clear_handler(self):
         self.checkLabel.text = ''
         self.set_img()
 
@@ -52,11 +53,11 @@ class Tester(Screen):
             self.myLabel.text = "hiraganas left: " + str(len(self.images))
             self.checkLabel.color = [0, 1, 0, 1]
             self.checkLabel.text = 'Good!'
-            Clock.schedule_once(lambda dt: self.check_handler(), .5)
+            Clock.schedule_once(lambda dt: self.clear_handler(), .5)
         else:
             self.checkLabel.color = [1, 0, 0, 1]
             self.checkLabel.text = f'Bad!\nCorrect romaji: {self.rngImage[:-4]}'
-            Clock.schedule_once(lambda dt: self.check_handler(), 3)
+            Clock.schedule_once(lambda dt: self.clear_handler(), 3)
 
 
 class LoadFile(FloatLayout):
